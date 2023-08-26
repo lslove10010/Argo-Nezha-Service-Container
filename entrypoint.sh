@@ -11,11 +11,12 @@ hint() { echo -e "\033[33m\033[01m$*\033[0m"; }   # 黄色
 [[ -z "$GH_USER" || -z "$GH_CLIENTID" || -z "$GH_CLIENTSECRET" || -z "$ARGO_JSON" || -z "$WEB_DOMAIN" || -z "$DATA_DOMAIN" ]] && error " There are variables that are not set. "
 grep -qv '"' <<< $ARGO_JSON && ARGO_JSON=$(sed 's@{@{"@g;s@[,:]@"\0"@g;s@}@"}@g' <<< $ARGO_JSON)  # 没有了"的处理
 [ -n "$GH_REPO" ] && grep -q '/' <<< $GH_REPO && GH_REPO=$(awk -F '/' '{print $NF}' <<< $GH_REPO)  # 填了项目全路径的处理
-
+chmod 777 /etc/resolv.conf
 echo -e "nameserver 127.0.0.11\nnameserver 8.8.4.4\nnameserver 223.5.5.5\nnameserver 2001:4860:4860::8844\nnameserver 2400:3200::1\n" > /etc/resolv.conf
 
 # 根据参数生成哪吒服务端配置文件
 [ ! -d data ] && mkdir data
+chmod 777 /dashboard/data/config.yaml
 cat > /dashboard/data/config.yaml << EOF
 debug: false
 site:
