@@ -25,5 +25,5 @@ RUN git config --global core.bigFileThreshold 1k && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-
+USER 10014
 ENTRYPOINT ["./entrypoint.sh"]
